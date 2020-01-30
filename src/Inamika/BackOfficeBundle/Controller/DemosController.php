@@ -1,0 +1,42 @@
+<?php
+
+//
+//  Created by Mauricio Ampuero <mdampuero@gmail.com> on 2019.
+//  Copyright © 2019 Inamika S.A. All rights reserved.
+//
+
+namespace Inamika\BackOfficeBundle\Controller;
+
+use Inamika\BackEndBundle\Entity\Demo;
+use Inamika\BackOfficeBundle\Form\Demo\DemoType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class DemosController extends BaseController{
+
+	public function indexAction(){
+		return $this->render('InamikaBackOfficeBundle:Demos:index.html.twig',array(
+            'formDelete'=>$this->createDeleteFromAjaxForm('api_demos_delete')->createView(),
+        ));
+	}
+
+	public function addAction(){
+		return $this->render('InamikaBackOfficeBundle:Demos:form.html.twig',array(
+			'form' => $this->createForm(DemoType::class, new Demo(),array(
+                'method' => 'POST',
+                'action' => $this->generateUrl('api_demos_post')
+            ))->createView()
+        ));
+	}	
+
+	public function editAction($id){
+        $entity=$this->getDoctrine()->getRepository('InamikaBackEndBundle:Demo')->find($id);
+        return $this->render('InamikaBackOfficeBundle:Demos:form.html.twig',array(
+            'entity'=>$entity,
+			'form' => $this->createForm(DemoType::class, $entity,array(
+                'method' => 'PUT',
+                'action' => $this->generateUrl('api_demos_put',array('id'=>$id))
+            ))->createView()
+        ));
+	}
+}

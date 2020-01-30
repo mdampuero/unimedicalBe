@@ -1,0 +1,20 @@
+inamika_api_admin_users:
+    path:     /
+    defaults: { _controller: InamikaApiBundle:Users:index }
+    methods: [GET]
+
+inamika_api_admin_users_add:
+    path:     /add
+    defaults: { _controller: InamikaApiBundle:Users:add }
+    methods: [POST]
+
+inamika_api_admin_users_edit:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaApiBundle:Users:edit }
+    methods: [POST]
+
+inamika_api_admin_users_delete:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaApiBundle:Users:delete }
+    methods: [DELETE]
+

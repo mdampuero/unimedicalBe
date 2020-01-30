@@ -1,0 +1,12 @@
+inamika_api_admin_settings:
+    path:     /admin/setting
+    defaults: { _controller: InamikaApiBundle:Settings:edit }
+    methods: [POST]
+
+inamika_api_admin_users:
+    resource: "@InamikaApiBundle/Resources/config/users.yml"
+    prefix:   /admin/usuarios
+
+api_demos:
+    resource: "@InamikaApiBundle/Resources/config/demos.yml"
+

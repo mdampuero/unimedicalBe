@@ -1,0 +1,69 @@
+inamika_backoffice_homepage:
+    path:     /
+    defaults:  
+        _controller: InamikaBackOfficeBundle:Dashboard:index
+    options:
+        breadcrumb:
+            label: DASHBOARD
+inamika_backoffice_change_lang:
+    path:     /changeLocale
+    defaults: { _controller: InamikaBackOfficeBundle:Dashboard:changeLocale }
+
+security_login:
+    path:     /login
+    defaults:  
+        _controller: InamikaBackOfficeBundle:Login:index
+        
+security_logout:
+    path:     /login/logout
+    defaults:  
+        _controller: InamikaBackOfficeBundle:Login:logout
+
+security_forgot:
+    path:     /login/forgot
+    defaults:  
+        _controller: InamikaBackOfficeBundle:Login:forgot
+        
+security_reset_password:
+    path:     /login/restablecer/{id}/{code}
+    defaults: 
+        _controller: InamikaBackOfficeBundle:Login:reset
+    methods: [GET,POST]
+
+inamika_backoffice_account:
+    path:     /mi_profile
+    defaults: 
+        _controller: InamikaBackOfficeBundle:Account:index
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: MY_PROFILE
+            parent_route: inamika_backoffice_homepage
+            
+inamika_backoffice_account_update:
+    path:     /MiCuenta/actualizar/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Account:update }
+    methods: [PUT]
+    options:
+        breadcrumb:
+            label: MY_PROFILE
+            parent_route: inamika_backoffice_homepage    
+
+inamika_backoffice_setting:
+    path:     /setting
+    defaults: { _controller: InamikaBackOfficeBundle:Settings:index }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: SETTING
+            parent_route: inamika_backoffice_homepage    
+
+inamika_backoffice_users:
+    resource: "@InamikaBackOfficeBundle/Resources/config/users.yml"
+    prefix:   /usuarios
+
+inamika_backoffice_demos:
+    resource: "@InamikaBackOfficeBundle/Resources/config/demos.yml"
+    prefix:   /demos
+
+
