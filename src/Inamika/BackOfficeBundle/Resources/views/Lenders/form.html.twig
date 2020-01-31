@@ -1,3 +1,4 @@
+{% set pathBase='inamika_backoffice_lenders' %} 
 {% extends "InamikaBackOfficeBundle::layout.html.twig" %}
 {% block body %} 
 {{ parent()}}     
@@ -8,37 +9,36 @@
         <div class="row p-t-20">
             <div class="col-md-6">
                 <div class="form-group">
-                    {{form_label(form.title)}}
-                    {{form_widget(form.title)}}
+                    {{form_label(form.name)}}
+                    {{form_widget(form.name)}}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {{form_label(form.copyright)}}
-                    {{form_widget(form.copyright)}}
+                    {{form_label(form.phone)}}
+                    {{form_widget(form.phone)}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{form_label(form.email)}}
+                    {{form_widget(form.email)}}
                 </div>
             </div>
         </div>
     </div>
     <div class="form-actions">
         <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> {{ 'SAVE' | trans }}</button>
-        <button type="button" class="btn btn-inverse" onclick="location.href='{{ path('backoffice_homepage') }}'">{{ 'CANCEL' | trans }}</button>
+        <button type="button" class="btn btn-inverse" onclick="location.href='{{ path(pathBase) }}'">{{ 'CANCEL' | trans }}</button>
     </div>
 {{ form_end(form) }}
 {% endblock body %}
 {% block javascripts %} 
 {{ parent() }}
+{% include 'InamikaBackOfficeBundle:_partials:dropifyScripts.html.twig' %}
 <script>
     function beforeSuccess(){
-        loading.hide();
-        $.toast({
-            heading: '{{ 'SUCCESS' | trans }}',
-            text: '{{ 'SUCCESS_TEXT' | trans }}',
-            position: 'top-right',
-            icon: 'success',
-            hideAfter: 3000, 
-            stack: 6
-        });
+        location.href="{{ path(pathBase) }}";
     }
 </script>
 {% endblock javascripts %}

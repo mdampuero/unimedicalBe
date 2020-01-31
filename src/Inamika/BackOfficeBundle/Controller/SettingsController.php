@@ -11,16 +11,18 @@ use Inamika\BackEndBundle\Entity\Setting;
 use Inamika\BackOfficeBundle\Form\Setting\SettingType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class SettingsController extends BaseController{
+
+class SettingsController extends Controller{
 
 	public function indexAction(){
         $entity=$this->getDoctrine()->getRepository('InamikaBackEndBundle:Setting')->find('setting');
         return $this->render('InamikaBackOfficeBundle:Settings:form.html.twig',array(
             'entity'=>$entity,
 			'form' => $this->createForm(SettingType::class, $entity,array(
-                'method' => 'POST',
-                'action' => $this->generateUrl('inamika_api_admin_settings')
+                'method' => 'PUT',
+                'action' => $this->generateUrl('api_demos_put',array('id'=>'setting'))
             ))->createView()
         ));
 	}

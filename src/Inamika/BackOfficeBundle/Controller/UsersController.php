@@ -14,14 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class UsersController extends BaseController{
+class UsersController extends Controller{
 
-	protected $pathBase="inamika_backoffice_users";
+	protected $pathBase="backoffice_users";
 
 	public function indexAction(){
 		return $this->render('InamikaBackOfficeBundle:Users:index.html.twig',array(
-            'formDelete'=>$this->createDeleteFromAjaxForm('inamika_api_admin_users_delete')->createView(),
+            'formDelete'=>$this->createFormBuilder()
+            ->setAction($this->generateUrl('api_users_delete', array('id' => ':ENTITY_ID')))
+            ->setMethod('DELETE')
+            ->getForm()->createView(),
         ));
 	}
 
@@ -29,18 +33,18 @@ class UsersController extends BaseController{
 		return $this->render('InamikaBackOfficeBundle:Users:form.html.twig',array(
 			'form' => $this->createForm(UserAddType::class, new User(),array(
                 'method' => 'POST',
-                'action' => $this->generateUrl('inamika_api_admin_users_add')
+                'action' => $this->generateUrl('api_users_post')
             ))->createView()
         ));
 	}	
 
 	public function editAction($id){
-        $entity=$this->getDoctrine()->getRepository('InamikaBackEndBundle:User')->find($id);
+        $entity=$this->getDoctrine()->getRepository(User::class)->find($id);
         return $this->render('InamikaBackOfficeBundle:Users:form.html.twig',array(
             'entity'=>$entity,
 			'form' => $this->createForm(UserType::class, $entity,array(
-                'method' => 'POST',
-                'action' => $this->generateUrl('inamika_api_admin_users_edit',array('id'=>$id))
+                'method' => 'PUT',
+                'action' => $this->generateUrl('api_users_put',array('id'=>$id))
             ))->createView()
         ));
 	}

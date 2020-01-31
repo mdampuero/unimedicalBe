@@ -8,26 +8,27 @@
 namespace Inamika\ApiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use FOS\RestBundle\Controller\FOSRestController;
 
 use Inamika\BackEndBundle\Entity\Setting;
 use Inamika\BackOfficeBundle\Form\Setting\SettingType;
 
-class SettingsController extends BaseController
+class SettingsController extends FOSRestController
 {
-    public function editAction(Request $request){
-        $entity=$this->getDoctrine()->getRepository('InamikaBackEndBundle:Setting')->find('setting');
-        $form = $this->createForm(SettingType::class,$entity,array('method' => 'POST'));
-        $form->handleRequest($request);
-        if($errors=$this->ifErrors($form)) return $errors;
-        try {
+    public function putAction(Request $request,$id){
+        if(!$entity=$this->getDoctrine()->getRepository(Setting::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        $form = $this->createForm(SettingType::class, $entity);
+        $form->submit(json_decode($request->getContent(), true));
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            return $this->responseOk();
-        }catch (Exception $exc) {
-            return $this->responseFail(array(array('property'=>null,'code'=>$exc->getCode(),'message'=>$exc->getMessage(),'data'=>null)),200);
+            return $this->handleView($this->view($entity, Response::HTTP_OK));
         }
+        return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
     }
 
 }

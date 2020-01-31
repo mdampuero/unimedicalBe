@@ -1,11 +1,11 @@
-{% set pathBase='inamika_backoffice_users' %}
-{% set pathBaseApi='api_users' %}
+{% set pathBase='inamika_backoffice_lenders' %}
+{% set pathBaseApi='api_lenders' %}
 {% extends "InamikaBackOfficeBundle::layout.html.twig" %}
 {% block body %} 
 {{ parent()}}
 <h3 class="card-title">
     {% if app.request.attributes.get('_route_params')._breadcrumbs is defined %}
-       {{ (app.request.attributes.get('_route_params')['_breadcrumbs']|last)['label'] | trans }}
+        {{ (app.request.attributes.get('_route_params')['_breadcrumbs']|last)['label'] | trans }}
     {% endif %}
     <button type="button" class="btn btn-success btn-rounded pull-right" onclick="location.href='{{ path(pathBase~'_add')}}'"><i class="fa fa-plus"></i> {{ 'ADD' | trans }}</button>
 </h3>
@@ -28,7 +28,7 @@
             order: [[ 0, 'desc' ]],
             columns: [
                 { title:"{{ 'NAME' | trans }}",data: "name" },
-                { title:"{{ 'ROLE' | trans }}",data: "role" },
+                { title:"{{ 'PHONE' | trans }}",data: "phone" },
                 { title:"{{ 'EMAIL' | trans }}",data: "email" },
                 {
                     data: null,

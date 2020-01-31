@@ -11,32 +11,36 @@ use Inamika\BackEndBundle\Entity\Demo;
 use Inamika\BackOfficeBundle\Form\Demo\DemoType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DemosController extends BaseController{
+class DemosController extends Controller{
 
 	public function indexAction(){
 		return $this->render('InamikaBackOfficeBundle:Demos:index.html.twig',array(
-            'formDelete'=>$this->createDeleteFromAjaxForm('api_demos_delete')->createView(),
+            'formDelete'=>$this->createFormBuilder()
+            ->setAction($this->generateUrl('api_demos_delete', array('id' => ':ENTITY_ID')))
+            ->setMethod('DELETE')
+            ->getForm()->createView()
         ));
-	}
+    }
 
-	public function addAction(){
-		return $this->render('InamikaBackOfficeBundle:Demos:form.html.twig',array(
-			'form' => $this->createForm(DemoType::class, new Demo(),array(
+    public function addAction(){
+        return $this->render('InamikaBackOfficeBundle:Demos:form.html.twig',array(
+            'form' => $this->createForm(DemoType::class, new Demo(),array(
                 'method' => 'POST',
                 'action' => $this->generateUrl('api_demos_post')
             ))->createView()
         ));
-	}	
+    }	
 
-	public function editAction($id){
+    public function editAction($id){
         $entity=$this->getDoctrine()->getRepository('InamikaBackEndBundle:Demo')->find($id);
         return $this->render('InamikaBackOfficeBundle:Demos:form.html.twig',array(
             'entity'=>$entity,
-			'form' => $this->createForm(DemoType::class, $entity,array(
+            'form' => $this->createForm(DemoType::class, $entity,array(
                 'method' => 'PUT',
                 'action' => $this->generateUrl('api_demos_put',array('id'=>$id))
             ))->createView()
         ));
-	}
+    }
 }

@@ -11,4 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class InamikaApiBundle extends Bundle
 {
+	public function algo(){
+		return true;
+	}
 }

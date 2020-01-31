@@ -91,7 +91,14 @@
         for (var i = formData.length - 1; i >= 0; i--) {
             data[formData[i].name]=formData[i].value;
         }
-    
+        let jsonObject = {};
+        for (const [key, value]  of formData.entries()) {
+            jsonObject[key] = value;
+        }
+        // console.log(formData);
+        // console.log(data);
+        // console.log(jsonObject);
+        // return false;
         var method=($('input[name="_method"]').length>0)?$('input[name="_method"]').val():form.attr("method");
         $.ajax({
             url: form.attr("action"),

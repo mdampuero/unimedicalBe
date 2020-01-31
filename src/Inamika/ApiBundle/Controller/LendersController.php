@@ -12,31 +12,38 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use FOS\RestBundle\Controller\FOSRestController;
 
-use Inamika\BackEndBundle\Entity\User;
-use Inamika\BackOfficeBundle\Form\User\UserAddType;
-use Inamika\BackOfficeBundle\Form\User\UserType;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Inamika\BackEndBundle\Entity\Lender;
+use Inamika\BackOfficeBundle\Form\Lender\LenderType;
 
-class UsersController extends FOSRestController
+class LendersController extends FOSRestController
 {
     public function indexAction(){
-        return $this->handleView($this->view($this->getDoctrine()->getRepository(User::class)->getAll()->getQuery()->getResult()));
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Lender::class)->getAll()->getQuery()->getResult()));
     }
-
+    
+    public function searchAction(Request $request){
+        $query=$request->query->get('query',null);
+        $offset=$request->query->get('offset',0);
+        $limit=$request->query->get('limit',30);
+        return $this->handleView($this->view(array(
+            'results'=>$this->getDoctrine()->getRepository(Lender::class)->search($query,$limit,$offset)->getQuery()->getResult(),
+            'total'=>$this->getDoctrine()->getRepository(Lender::class)->searchTotal($query,$limit,$offset),
+            'offset'=>$offset,
+            'limit'=>$limit
+        )));
+    }
+    
     public function getAction($id){
-        if(!$entity=$this->getDoctrine()->getRepository(User::class)->find($id))
+        if(!$entity=$this->getDoctrine()->getRepository(Lender::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));
     }
 
-    public function postAction(Request $request,UserPasswordEncoderInterface $passwordEncoder){
-        $entity = new User();
-        $form = $this->createForm(UserAddType::class, $entity);
+    public function postAction(Request $request){
+        $entity = new Lender();
+        $form = $this->createForm(LenderType::class, $entity);
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->encodePassword($entity, $entity->getPlainPassword());
-            $entity->setPassword($password);
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -46,9 +53,9 @@ class UsersController extends FOSRestController
     }
     
     public function putAction(Request $request,$id){
-        if(!$entity=$this->getDoctrine()->getRepository(User::class)->find($id))
+        if(!$entity=$this->getDoctrine()->getRepository(Lender::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
-        $form = $this->createForm(UserType::class, $entity);
+        $form = $this->createForm(LenderType::class, $entity);
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -58,9 +65,9 @@ class UsersController extends FOSRestController
         }
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
     }
-    
+
     public function deleteAction(Request $request,$id){
-        if(!$entity=$this->getDoctrine()->getRepository(User::class)->find($id))
+        if(!$entity=$this->getDoctrine()->getRepository(Lender::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         $form = $this->createFormBuilder(null, array('csrf_protection' => false))->setMethod('DELETE')->getForm();
         $form->submit(json_decode($request->getContent(), true));

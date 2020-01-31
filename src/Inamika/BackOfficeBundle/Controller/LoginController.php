@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LoginController extends Controller{
 
     public function indexAction(Request $request, AuthenticationUtils $authUtils){
-        if($this->getUser()) return $this->redirectToRoute('inamika_backoffice_homepage');
+        if($this->getUser()) return $this->redirectToRoute('backoffice_homepage');
 
         if($authUtils->getLastAuthenticationError()) $this->addFlash("danger", $this->get('translator')->trans('EMAIL_OR_PASSWORD_INVALID'));
         return $this->render('InamikaBackOfficeBundle:Login:index.html.twig',array(
@@ -65,7 +65,7 @@ class LoginController extends Controller{
     }
 
     public function resetAction($id,$code,Request $request,UserPasswordEncoderInterface $passwordEncoder){
-        if($this->getUser()) return $this->redirectToRoute('inamika_backoffice_homepage');
+        if($this->getUser()) return $this->redirectToRoute('backoffice_homepage');
         $form = $this->createForm(RecoverType::class);
         $form->handleRequest($request);
         $em=$this->getDoctrine()->getManager();

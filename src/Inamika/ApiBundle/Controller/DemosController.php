@@ -10,14 +10,27 @@ namespace Inamika\ApiBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use FOS\RestBundle\Controller\FOSRestController;
+
 use Inamika\BackEndBundle\Entity\Demo;
 use Inamika\BackOfficeBundle\Form\Demo\DemoType;
-use FOS\RestBundle\Controller\FOSRestController;
 
 class DemosController extends FOSRestController
 {
     public function indexAction(){
         return $this->handleView($this->view($this->getDoctrine()->getRepository(Demo::class)->getAll()->getQuery()->getResult()));
+    }
+    
+    public function searchAction(Request $request){
+        $query=$request->query->get('query',null);
+        $offset=$request->query->get('offset',0);
+        $limit=$request->query->get('limit',30);
+        return $this->handleView($this->view(array(
+            'results'=>$this->getDoctrine()->getRepository(Lender::class)->search($query,$limit,$offset)->getQuery()->getResult(),
+            'total'=>$this->getDoctrine()->getRepository(Lender::class)->searchTotal($query,$limit,$offset),
+            'offset'=>$offset,
+            'limit'=>$limit
+        )));
     }
     
     public function getAction($id){

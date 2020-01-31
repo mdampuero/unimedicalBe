@@ -10,9 +10,14 @@
                         <i class="mdi mdi-gauge"></i><span class="hide-menu">{{ 'DASHBOARD' | trans }}</span>
                     </a>
                 </li>
-                <li class="{% if 'inamika_backoffice_demos' in app.request.get('_route') %}active{% endif %}">
+                <!-- <li class="{% if 'inamika_backoffice_demos' in app.request.get('_route') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_demos')}}" aria-expanded="false">
                         <i class="mdi mdi-lead-pencil"></i><span class="hide-menu">{{ 'DEMOS' | trans }}</span>
+                    </a>
+                </li> -->
+                <li class="{% if 'inamika_backoffice_lenders' in app.request.get('_route') %}active{% endif %}">
+                    <a href="{{ path('inamika_backoffice_lenders')}}" aria-expanded="false">
+                        <i class="mdi mdi-account-card-details"></i><span class="hide-menu">{{ 'LENDERS' | trans }}</span>
                     </a>
                 </li>
                 <li class="{% if 'inamika_backoffice_users' in app.request.get('_route') %}active{% endif %}">

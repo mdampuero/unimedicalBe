@@ -16,9 +16,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormError;
 
-class AccountController extends BaseController{
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-	protected $pathBase="inamika_backoffice_account";
+class AccountController extends Controller{
+
+	protected $pathBase="backoffice_account";
 
 	public function indexAction(){
         $entity=$this->get('security.token_storage')->getToken()->getUser();

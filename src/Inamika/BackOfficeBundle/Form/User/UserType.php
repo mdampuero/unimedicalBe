@@ -62,6 +62,8 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
+            'csrf_protection'=>false,
+            'allow_extra_fields'=>true,
             'data_class' => 'Inamika\BackEndBundle\Entity\User'
         ));
     }
@@ -71,7 +73,7 @@ class UserType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'inamika_backendbundle_user';
+        return '';
     }
 
 

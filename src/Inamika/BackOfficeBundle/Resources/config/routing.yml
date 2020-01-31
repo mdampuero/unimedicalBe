@@ -65,5 +65,9 @@ inamika_backoffice_users:
 inamika_backoffice_demos:
     resource: "@InamikaBackOfficeBundle/Resources/config/demos.yml"
     prefix:   /demos
+    
+inamika_backoffice_lenders:
+    resource: "@InamikaBackOfficeBundle/Resources/config/lenders.yml"
+    prefix:   /prestadores
 
 
