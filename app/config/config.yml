@@ -99,9 +99,10 @@ nelmio_cors:
 # fos_rest:
 #     serializer:
 #       serialize_null: true
-# jms_serializer:
-#     property_naming: 
-#         id: 'jms_serializer.identical_property_naming_strategy'
+jms_serializer:
+    property_naming: 
+        lower_case: false
+        id: 'jms_serializer.identical_property_naming_strategy'
 # # Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
 # fos_rest:
 #     routing_loader:

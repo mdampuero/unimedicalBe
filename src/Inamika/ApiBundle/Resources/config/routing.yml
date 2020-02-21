@@ -10,3 +10,6 @@ api_settings:
 api_lenders:
     resource: "@InamikaApiBundle/Resources/config/lenders.yml"
 
+api_products:
+    resource: "@InamikaApiBundle/Resources/config/products.yml"
+
