@@ -52,6 +52,13 @@ class Product
      * @Expose
      */
     private $barcode;
+    
+    /**
+     * @var string
+     *
+     * @Expose
+     */
+    private $picture;
 
     /**
      * @var float|null
@@ -155,6 +162,30 @@ class Product
     public function getBrand()
     {
         return $this->brand;
+    }
+    
+    /**
+     * Set picture.
+     *
+     * @param string|null $picture
+     *
+     * @return Product
+     */
+    public function setPicture($picture = null)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture.
+     *
+     * @return string|null
+     */
+    public function getPicture()
+    {
+        return "http://www.dsdas.com/".$this->barcode;
     }
 
     /**

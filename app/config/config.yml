@@ -96,9 +96,9 @@ nelmio_cors:
         origin_regex: false
  
 # FOSRest Configuration
-# fos_rest:
-#     serializer:
-#       serialize_null: true
+fos_rest:
+    serializer:
+      serialize_null: true
 jms_serializer:
     property_naming: 
         lower_case: false
