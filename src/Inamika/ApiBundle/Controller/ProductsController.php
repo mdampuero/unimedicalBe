@@ -36,9 +36,9 @@ class ProductsController extends FOSRestController
         )));
     }
 
-    public function getAction($id)
+    public function getAction($barcode)
     {
-        if (!$entity = $this->getDoctrine()->getRepository(Product::class)->find($id)) {
+        if (!$entity = $this->getDoctrine()->getRepository(Product::class)->findOneByBarcode($barcode)) {
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         }
 

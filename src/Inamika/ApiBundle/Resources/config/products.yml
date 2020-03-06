@@ -9,7 +9,7 @@ api_products_search:
     methods: [GET]
 
 api_products_get:
-    path:     /products/{id}
+    path:     /products/{barcode}
     defaults: { _controller: InamikaApiBundle:Products:get }
     methods: [GET]
 
